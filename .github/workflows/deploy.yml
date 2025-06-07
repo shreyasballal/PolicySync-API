@@ -40,6 +40,4 @@ jobs:
           EC2_KEY: ${{ secrets.EC2_KEY }}
         run: |
           echo "Host: $EC2_HOST"  # Debug step
-          ssh -v -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "pkill -f 'java -jar' || true"
-          ssh -v -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "ls -l ~/policysync.jar || echo 'JAR not found'"
-          ssh -v -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "nohup java -jar ~/policysync.jar >/dev/null 2>&1 & echo $! > ~/app.pid"
+          ssh -v -o StrictHostKeyChecking=no -i key.pem $EC2_USER@$EC2_HOST "pkill -f 'java -jar' || true && ls -l ~/policysync.jar || echo 'JAR not found' && nohup java -jar ~/policysync.jar >/dev/null 2>&1 & echo $! > ~/app.pid"
